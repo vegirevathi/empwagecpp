@@ -1,7 +1,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 using namespace std;
+
+void write(int);
 
 int main() {
 	cout << "Welcome to Employee wage computation" << endl;
@@ -35,5 +38,15 @@ while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
 	}
 	totalEmpWage = totalEmpHrs * empRatePerHour;
 	cout << "Total employee wage is " <<totalEmpWage <<endl;
+
+	write(totalEmpWage);
    return 0;
+}
+
+void write(int totalEmpWage) {
+	ofstream myfile ("wages.txt");
+	if (myfile.is_open()) {
+		myfile <<"Total employee wage for the month is " <<totalEmpWage;
+		myfile.close();
+	}
 }
