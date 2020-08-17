@@ -7,21 +7,31 @@ int main() {
 	cout << "Welcome to Employee wage computation" << endl;
    srand(time(NULL));
 
-	int empRatePerHour = 20, partTime = 1, fullTime = 2;
-   int empStatus, empWage, empHrs;
-   empStatus = rand() % 3;
+	int empRatePerHour = 20;
+	int numOfWorkingDays = 20;
+	int partTime = 1;
+	int fullTime = 2;
+   int empStatus, empWage, empHrs, totalEmpWage = 0;
 
-   if (empStatus == fullTime) {
-      cout << "Employee is full time present" <<endl;
+for (int day = 1; day <= numOfWorkingDays; day++) {
+   empStatus = rand() % 3;
+	switch (empStatus) {
+   case 1:
+      cout <<"DAY" <<day <<" : Employee is full time present" <<endl;
 		empHrs = 8;
-	} else if (empStatus == partTime) {
-		cout << "Employee is part time present" <<endl;
+		break;
+	case 2:
+		cout <<"DAY" <<day <<" : Employee is part time present" <<endl;
 		empHrs = 4;
-   } else {
-      cout << "Employee is absent" <<endl;
+		break;
+   default:
+      cout <<"DAY" <<day <<" : Employee is absent"<<endl;
 		empHrs = 0;
+		break;
    }
 	empWage = empHrs * empRatePerHour;
-	cout << "Employee wage is " <<empWage <<endl;
+	totalEmpWage += empWage;
+	}
+	cout << "Total employee wage is " <<totalEmpWage <<endl;
    return 0;
 }
