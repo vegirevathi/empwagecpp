@@ -9,29 +9,31 @@ int main() {
 
 	int empRatePerHour = 20;
 	int numOfWorkingDays = 20;
+	int maxHrsInMonth = 100;
 	int partTime = 1;
 	int fullTime = 2;
-   int empStatus, empWage, empHrs, totalEmpWage = 0;
+   int empStatus, empWage, empHrs, totalEmpWage = 0, totalEmpHrs = 0, totalWorkingDays = 0;
 
-for (int day = 1; day <= numOfWorkingDays; day++) {
+while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
+	totalWorkingDays++;
    empStatus = rand() % 3;
 	switch (empStatus) {
    case 1:
-      cout <<"DAY" <<day <<" : Employee is full time present" <<endl;
+      cout <<"DAY" <<totalWorkingDays <<" : Employee is full time present" <<endl;
 		empHrs = 8;
 		break;
 	case 2:
-		cout <<"DAY" <<day <<" : Employee is part time present" <<endl;
+		cout <<"DAY" <<totalWorkingDays <<" : Employee is part time present" <<endl;
 		empHrs = 4;
 		break;
    default:
-      cout <<"DAY" <<day <<" : Employee is absent"<<endl;
+      cout <<"DAY" <<totalWorkingDays <<" : Employee is absent"<<endl;
 		empHrs = 0;
 		break;
    }
-	empWage = empHrs * empRatePerHour;
-	totalEmpWage += empWage;
+	totalEmpHrs += empHrs;
 	}
+	totalEmpWage = totalEmpHrs * empRatePerHour;
 	cout << "Total employee wage is " <<totalEmpWage <<endl;
    return 0;
 }
