@@ -1,4 +1,0 @@
-Employee ID, Monthly Wage
-1, 1440
-2, 1440
-3, 1440
