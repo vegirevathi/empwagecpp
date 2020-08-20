@@ -1,1 +1,4 @@
-Total employee wage for the month is 1920
+Employee ID, Monthly Wage
+1, 1440
+2, 1440
+3, 1440
