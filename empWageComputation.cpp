@@ -6,14 +6,28 @@
 #include <unistd.h>
 using namespace std;
 
-void write(string, string, string, int);
+struct Company {
+	string companyName;
+	int numOfWorkingDays;
+	int maxHrsInMonth;
+	int empRatePerHrs;
+public:
+	void setCompanyDetails(string companyName, int numOfWorkingDays, int maxHrsInMonth, int empRatePerHrs) {
+			this -> companyName = companyName;
+			this -> numOfWorkingDays = numOfWorkingDays;
+			this -> maxHrsInMonth = maxHrsInMonth;
+			this -> empRatePerHrs = empRatePerHrs;
+	}
+};
 
-int computeEmpWage(string employeeID, string month) {
+void write(vector <int>, int, int, string);
+
+int getWorkingHours(struct Company company) {
    srand(time(NULL));
 
-	int empRatePerHour = 20;
-	int numOfWorkingDays = 20;
-	int maxHrsInMonth = 100;
+	int numOfWorkingDays = company.numOfWorkingDays;
+	int maxHrsInMonth = company.maxHrsInMonth;
+
 	int partTime = 1;
 	int fullTime = 2;
    int empStatus, empWage, empHrs=0, totalEmpWage=0, totalEmpHrs = 0, totalWorkingDays = 0;
@@ -41,20 +55,46 @@ while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
 
 	totalEmpHrs += empHrs;
 	}
-
-	totalEmpWage = totalEmpHrs * empRatePerHour;
-	cout << "Employee ID : " << employeeID << "Month : " << month <<" Salary : " << totalEmpWage <<endl;
-
-	return totalEmpWage;
-	write("wages.txt", employeeID, month, totalEmpWage);
+	return totalEmpHrs;
 }
 
-void write(string filename, string employeeID, string month, int totalEmpWage) {
-	fstream myfile;
-	myfile.open(filename, ios::out | ios::trunc);
+void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths) {
+	int empRatePerHour = company.empRatePerHrs;
+	for(int i = 1; i <= numOfEmployees; i++) {
+		vector <int> monthlyWage;
+		for(int j = 1; j <= numOfMonths; j++) {
 
-	if (myfile.is_open()) {
-		myfile << employeeID << "-----" << month << "-----" << totalEmpWage << endl;
+			int totalEmpWage = getWorkingHours(company) * empRatePerHour;
+			monthlyWage.push_back(totalEmpWage);
+			cout << "Employee ID : " << i << " Month : " << j <<" Salary : " << totalEmpWage <<endl;
+		}
+
+	write(monthlyWage, i, numOfMonths, company.companyName);
+	}
+}
+
+void write(vector <int> wages, int employeeID, int numOfMonths, string companyName) {
+	fstream myfile;
+	myfile.open("Wages.csv", ios::out | ios::app);
+	myfile.seekg(0, ios::end);
+
+	if (myfile.is_open())
+	{
+		if(myfile.tellp() ==0)
+		{
+			myfile << "Company, Employee";
+			for (int month = 1; month <= 12; month++)
+			{
+				myfile << ", Month " << month;
+			}
+		}
+
+		myfile.seekg(0, ios::beg);
+		myfile << "\n" << companyName << ", Employee " << employeeID;
+		for(int month = 0; month < numOfMonths; month++)
+		{
+			myfile << ", " << wages[month];
+		}
 	}
 
 	myfile.close();
@@ -63,17 +103,12 @@ void write(string filename, string employeeID, string month, int totalEmpWage) {
 int main() {
 	cout << "Welcome to Employee wage computation" << endl;
 
-	string month[3] = { "Jan", "Feb", "Mar"};
-	string employeeNames[4] = { "001", "002", "003", "004" };
+	struct Company company;
+	company.setCompanyDetails("DMART", 20, 100, 20);
+	computeEmpWage(company, 3, 12);
+	company.setCompanyDetails("Reliance", 25, 80, 40);
+	computeEmpWage(company, 2, 12);
 
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 3 ; j++)
-		{
-			string monthName = month[j];
-			string employeeID = employeeNames[i];
+	return 0;
 
-			computeEmpWage(employeeID, monthName);
-		}
-	}
 }
