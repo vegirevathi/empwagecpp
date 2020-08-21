@@ -22,8 +22,15 @@ public:
 
 void write(vector <int>, int, int, string);
 
-int getWorkingHours(struct Company company) {
-   srand(time(NULL));
+struct EmployeeWageBuilder {
+		int getWorkingHours(Company);
+		int computeEmpWage(Company company)
+		{
+				return getWorkingHours(company) * company.empRatePerHrs;
+	}
+};
+
+int EmployeeWageBuilder::getWorkingHours(Company company) {
 
 	int numOfWorkingDays = company.numOfWorkingDays;
 	int maxHrsInMonth = company.maxHrsInMonth;
@@ -32,6 +39,7 @@ int getWorkingHours(struct Company company) {
 	int fullTime = 2;
    int empStatus, empWage, empHrs=0, totalEmpWage=0, totalEmpHrs = 0, totalWorkingDays = 0;
 
+   srand(time(NULL));
 while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
 	totalWorkingDays++;
    empStatus = rand() % 3;
@@ -59,12 +67,14 @@ while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
 }
 
 void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths) {
-	int empRatePerHour = company.empRatePerHrs;
+	//int empRatePerHour = company.empRatePerHrs;
+	struct EmployeeWageBuilder employeeWageBuilder;
+
 	for(int i = 1; i <= numOfEmployees; i++) {
 		vector <int> monthlyWage;
 		for(int j = 1; j <= numOfMonths; j++) {
 
-			int totalEmpWage = getWorkingHours(company) * empRatePerHour;
+			int totalEmpWage = employeeWageBuilder.computeEmpWage(company);
 			monthlyWage.push_back(totalEmpWage);
 			cout << "Employee ID : " << i << " Month : " << j <<" Salary : " << totalEmpWage <<endl;
 		}
