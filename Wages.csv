@@ -1,6 +1,67 @@
-Company, Employee, Month 1, Month 2, Month 3, Month 4, Month 5, Month 6, Month 7, Month 8, Month 9, Month 10, Month 11, Month 12
-DMART, Employee 1, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520
-DMART, Employee 2, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520
-DMART, Employee 3, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520, 1520
-Reliance, Employee 1, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360
-Reliance, Employee 2, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360, 3360
+Company, Employee, month, Day, dailyWage, monthlyWage
+DMART, Employee_1, 1, 1, 0, 0
+DMART, Employee_1, 1, 2, 80, 80
+DMART, Employee_1, 1, 3, 160, 240
+DMART, Employee_1, 1, 4, 0, 240
+DMART, Employee_1, 2, 1, 0, 80
+DMART, Employee_1, 2, 2, 160, 160
+DMART, Employee_1, 2, 3, 160, 320
+DMART, Employee_1, 2, 4, 0, 320
+DMART, Employee_1, 3, 1, 0, 160
+DMART, Employee_1, 3, 2, 0, 160
+DMART, Employee_1, 3, 3, 320, 320
+DMART, Employee_1, 3, 4, 0, 320
+DMART, Employee_2, 1, 1, 0, 0
+DMART, Employee_2, 1, 2, 80, 80
+DMART, Employee_2, 1, 3, 160, 240
+DMART, Employee_2, 1, 4, 0, 240
+DMART, Employee_2, 2, 1, 0, 80
+DMART, Employee_2, 2, 2, 160, 160
+DMART, Employee_2, 2, 3, 160, 320
+DMART, Employee_2, 2, 4, 0, 320
+DMART, Employee_2, 3, 1, 0, 160
+DMART, Employee_2, 3, 2, 0, 160
+DMART, Employee_2, 3, 3, 320, 320
+DMART, Employee_2, 3, 4, 0, 320
+DMART, Employee_3, 1, 1, 0, 0
+DMART, Employee_3, 1, 2, 80, 80
+DMART, Employee_3, 1, 3, 160, 240
+DMART, Employee_3, 1, 4, 0, 240
+DMART, Employee_3, 2, 1, 0, 80
+DMART, Employee_3, 2, 2, 160, 160
+DMART, Employee_3, 2, 3, 160, 320
+DMART, Employee_3, 2, 4, 0, 320
+DMART, Employee_3, 3, 1, 0, 160
+DMART, Employee_3, 3, 2, 0, 160
+DMART, Employee_3, 3, 3, 320, 320
+DMART, Employee_3, 3, 4, 0, 320
+Reliance, Employee_1, 1, 1, 320, 320
+Reliance, Employee_1, 1, 2, 160, 480
+Reliance, Employee_1, 1, 3, 160, 640
+Reliance, Employee_1, 1, 4, 160, 800
+Reliance, Employee_1, 1, 5, 320, 1120
+Reliance, Employee_1, 2, 1, 0, 160
+Reliance, Employee_1, 2, 2, 320, 320
+Reliance, Employee_1, 2, 3, 160, 480
+Reliance, Employee_1, 2, 4, 160, 640
+Reliance, Employee_1, 2, 5, 320, 960
+Reliance, Employee_1, 3, 1, 0, 160
+Reliance, Employee_1, 3, 2, 0, 160
+Reliance, Employee_1, 3, 3, 320, 320
+Reliance, Employee_1, 3, 4, 160, 480
+Reliance, Employee_1, 3, 5, 320, 800
+Reliance, Employee_2, 1, 1, 320, 320
+Reliance, Employee_2, 1, 2, 160, 480
+Reliance, Employee_2, 1, 3, 160, 640
+Reliance, Employee_2, 1, 4, 160, 800
+Reliance, Employee_2, 1, 5, 320, 1120
+Reliance, Employee_2, 2, 1, 0, 160
+Reliance, Employee_2, 2, 2, 320, 320
+Reliance, Employee_2, 2, 3, 160, 480
+Reliance, Employee_2, 2, 4, 160, 640
+Reliance, Employee_2, 2, 5, 320, 960
+Reliance, Employee_2, 3, 1, 0, 160
+Reliance, Employee_2, 3, 2, 0, 160
+Reliance, Employee_2, 3, 3, 320, 320
+Reliance, Employee_2, 3, 4, 160, 480
+Reliance, Employee_2, 3, 5, 320, 800

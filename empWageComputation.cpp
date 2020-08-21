@@ -6,13 +6,16 @@
 #include <unistd.h>
 using namespace std;
 
-struct Company {
+struct Company
+{
 	string companyName;
 	int numOfWorkingDays;
 	int maxHrsInMonth;
 	int empRatePerHrs;
+
 public:
-	void setCompanyDetails(string companyName, int numOfWorkingDays, int maxHrsInMonth, int empRatePerHrs) {
+	void setCompanyDetails(string companyName, int numOfWorkingDays, int maxHrsInMonth, int empRatePerHrs)
+	{
 			this -> companyName = companyName;
 			this -> numOfWorkingDays = numOfWorkingDays;
 			this -> maxHrsInMonth = maxHrsInMonth;
@@ -20,24 +23,25 @@ public:
 	}
 };
 
-void write(vector <int>, int, int, string);
+void write(vector <int>, int, int, int, string);
 
-struct EmployeeWageBuilder {
-		int getWorkingHours(Company);
-		int computeEmpWage(Company company)
-		{
-				return getWorkingHours(company) * company.empRatePerHrs;
+struct EmployeeWageBuilder
+{
+	int getWorkingHours(Company);
+	int computeEmpWage(Company company)
+	{
+		return getWorkingHours(company) * company.empRatePerHrs;
 	}
 };
 
-int EmployeeWageBuilder::getWorkingHours(Company company) {
-
+int EmployeeWageBuilder::getWorkingHours(Company company)
+{
 	int numOfWorkingDays = company.numOfWorkingDays;
 	int maxHrsInMonth = company.maxHrsInMonth;
 
-	int partTime = 1;
-	int fullTime = 2;
-   int empStatus, empWage, empHrs=0, totalEmpWage=0, totalEmpHrs = 0, totalWorkingDays = 0;
+	const int FULL_TIME = 1;
+	const int PART_TIME = 2;
+   int empStatus, empHrs=0, totalEmpHrs = 0, totalWorkingDays = 0;
 
    srand(time(NULL));
 while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
@@ -45,45 +49,51 @@ while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
    empStatus = rand() % 3;
 
 	switch (empStatus) {
-   case 1:
-		//cout <<"DAY" <<totalWorkingDays <<" : Employee is full time present" <<endl;
-		empHrs = 8;
-		break;
+   case FULL_TIME:
+				empHrs = 8;
+				break;
 
-	case 2:
-		//cout <<"DAY" <<totalWorkingDays <<" : Employee is part time present" <<endl;
-		empHrs = 4;
-		break;
+	case PART_TIME:
+				empHrs = 4;
+				break;
 
    default:
-      //cout <<"DAY" <<totalWorkingDays <<" : Employee is absent"<<endl;
-		empHrs = 0;
-		break;
+				empHrs = 0;
+				break;
 	   }
-
-	totalEmpHrs += empHrs;
 	}
-	return totalEmpHrs;
+	return empHrs;
 }
 
-void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths) {
-	//int empRatePerHour = company.empRatePerHrs;
+void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths)
+{
 	struct EmployeeWageBuilder employeeWageBuilder;
+	int totalMonthlyWage = 0;
+	vector <int> wages;
 
-	for(int i = 1; i <= numOfEmployees; i++) {
-		vector <int> monthlyWage;
-		for(int j = 1; j <= numOfMonths; j++) {
+	for(int id = 1; id <= numOfEmployees; id++)
+	{
+		for(int month = 1; month <= numOfMonths; month++)
+		{
+			for (int day = 1; day <= company.numOfWorkingDays; day++)
+			{
+				int dailyEmpWage = employeeWageBuilder.computeEmpWage(company);
+				wages.push_back(dailyEmpWage);
 
-			int totalEmpWage = employeeWageBuilder.computeEmpWage(company);
-			monthlyWage.push_back(totalEmpWage);
-			cout << "Employee ID : " << i << " Month : " << j <<" Salary : " << totalEmpWage <<endl;
+				totalMonthlyWage += dailyEmpWage;
+				sleep(2);
+
+				cout << company.companyName << " -- Employee ID : " << id << "    Day : " << day << "    Month : " << month <<"   daily Salary : " << dailyEmpWage <<"   monthly salary: " <<totalMonthlyWage <<endl;
+			}
+			totalMonthlyWage = 0;
 		}
 
-	write(monthlyWage, i, numOfMonths, company.companyName);
+		write(wages, id, company.numOfWorkingDays, numOfMonths, company.companyName);
 	}
 }
 
-void write(vector <int> wages, int employeeID, int numOfMonths, string companyName) {
+void write(vector <int> wages, int employeeID, int numOfWorkingDays, int numOfMonths, string companyName)
+{
 	fstream myfile;
 	myfile.open("Wages.csv", ios::out | ios::app);
 	myfile.seekg(0, ios::end);
@@ -92,33 +102,32 @@ void write(vector <int> wages, int employeeID, int numOfMonths, string companyNa
 	{
 		if(myfile.tellp() ==0)
 		{
-			myfile << "Company, Employee";
-			for (int month = 1; month <= 12; month++)
-			{
-				myfile << ", Month " << month;
-			}
+			myfile << "Company, Employee, month, Day, dailyWage, monthlyWage" <<endl;
 		}
 
 		myfile.seekg(0, ios::beg);
-		myfile << "\n" << companyName << ", Employee " << employeeID;
-		for(int month = 0; month < numOfMonths; month++)
+		for(int month = 1; month <= numOfMonths; month++)
 		{
-			myfile << ", " << wages[month];
+			for(int day = 1; day <= numOfWorkingDays; day++)
+			{
+				wages[month] += wages[day];
+				myfile << companyName << ", Employee_" << employeeID << ", " << month << ", " << day << ", " << wages[day] << ", " << wages[month] <<endl;
+			}
+			wages[month] = 0;
 		}
 	}
-
 	myfile.close();
 }
 
-int main() {
+int main()
+{
 	cout << "Welcome to Employee wage computation" << endl;
 
 	struct Company company;
-	company.setCompanyDetails("DMART", 20, 100, 20);
-	computeEmpWage(company, 3, 12);
-	company.setCompanyDetails("Reliance", 25, 80, 40);
-	computeEmpWage(company, 2, 12);
+	company.setCompanyDetails("DMART", 4, 100, 20);
+	computeEmpWage(company, 3, 3);
+	company.setCompanyDetails("Reliance", 5, 80, 40);
+	computeEmpWage(company, 2, 3);
 
 	return 0;
-
 }
