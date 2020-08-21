@@ -28,11 +28,39 @@ void write(vector <int>, int, int, int, string);
 struct EmployeeWageBuilder
 {
 	int getWorkingHours(Company);
+	void queryTotalWage(Company, string, int, int);
+
 	int computeEmpWage(Company company)
 	{
 		return getWorkingHours(company) * company.empRatePerHrs;
 	}
 };
+
+void EmployeeWageBuilder::queryTotalWage(Company company, string searchCompany, int numOfMonths, int numOfEmployees)
+{
+	int totalCompanyWage = 0;
+	int result = searchCompany.compare(company.companyName);
+	if (result == 0) {
+	for(int employee = 1; employee <= numOfEmployees; employee++)
+	{
+		for(int month = 1; month <= numOfMonths; month++)
+		{
+			for(int day = 1; day <= company.numOfWorkingDays; day++)
+			{
+				int dailyWage = getWorkingHours(company) * company.empRatePerHrs;
+				totalCompanyWage += dailyWage;
+			}
+		}
+	}
+	cout <<"Total Company Wage is : " << totalCompanyWage;
+	}
+	else
+	{
+		cout << "No company found" <<endl;
+	}
+}
+
+
 
 int EmployeeWageBuilder::getWorkingHours(Company company)
 {
@@ -124,10 +152,17 @@ int main()
 	cout << "Welcome to Employee wage computation" << endl;
 
 	struct Company company;
+	string searchName;
+	struct EmployeeWageBuilder employeeWageBuilder;
+
 	company.setCompanyDetails("DMART", 4, 100, 20);
 	computeEmpWage(company, 3, 3);
 	company.setCompanyDetails("Reliance", 5, 80, 40);
 	computeEmpWage(company, 2, 3);
+
+	cout<<"Enter the company name you want to search" <<endl;
+	cin >> searchName;
+	employeeWageBuilder.queryTotalWage(company, searchName, 4, 2);
 
 	return 0;
 }
