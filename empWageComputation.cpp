@@ -12,14 +12,19 @@ struct Company
 	int numOfWorkingDays;
 	int maxHrsInMonth;
 	int empRatePerHrs;
+	int numOfEmployees;
+	int numOfMonths;
+
 
 public:
-	void setCompanyDetails(string companyName, int numOfWorkingDays, int maxHrsInMonth, int empRatePerHrs)
+	void setCompanyDetails(string companyName, int numOfWorkingDays, int maxHrsInMonth, int empRatePerHrs, int numOfEmployees, int numOfMonths)
 	{
 			this -> companyName = companyName;
 			this -> numOfWorkingDays = numOfWorkingDays;
 			this -> maxHrsInMonth = maxHrsInMonth;
 			this -> empRatePerHrs = empRatePerHrs;
+			this -> numOfEmployees = numOfEmployees;
+			this -> numOfMonths = numOfMonths;
 	}
 };
 
@@ -28,7 +33,7 @@ void write(vector <int>, int, int, int, string);
 struct EmployeeWageBuilder
 {
 	int getWorkingHours(Company);
-	void queryTotalWage(Company, string, int, int);
+	void queryTotalWage(Company, string);
 
 	int computeEmpWage(Company company)
 	{
@@ -36,14 +41,14 @@ struct EmployeeWageBuilder
 	}
 };
 
-void EmployeeWageBuilder::queryTotalWage(Company company, string searchCompany, int numOfMonths, int numOfEmployees)
+void EmployeeWageBuilder::queryTotalWage(Company company, string searchCompany)
 {
 	int totalCompanyWage = 0;
 	int result = searchCompany.compare(company.companyName);
 	if (result == 0) {
-	for(int employee = 1; employee <= numOfEmployees; employee++)
+	for(int employee = 1; employee <= company.numOfEmployees; employee++)
 	{
-		for(int month = 1; month <= numOfMonths; month++)
+		for(int month = 1; month <= company.numOfMonths; month++)
 		{
 			for(int day = 1; day <= company.numOfWorkingDays; day++)
 			{
@@ -93,15 +98,15 @@ while (totalEmpHrs <= maxHrsInMonth && totalWorkingDays <= numOfWorkingDays) {
 	return empHrs;
 }
 
-void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths)
+void computeEmpWage(struct Company company)
 {
 	struct EmployeeWageBuilder employeeWageBuilder;
 	int totalMonthlyWage = 0;
 	vector <int> wages;
 
-	for(int id = 1; id <= numOfEmployees; id++)
+	for(int id = 1; id <= company.numOfEmployees; id++)
 	{
-		for(int month = 1; month <= numOfMonths; month++)
+		for(int month = 1; month <= company.numOfMonths; month++)
 		{
 			for (int day = 1; day <= company.numOfWorkingDays; day++)
 			{
@@ -116,7 +121,7 @@ void computeEmpWage(struct Company company, int numOfEmployees, int numOfMonths)
 			totalMonthlyWage = 0;
 		}
 
-		write(wages, id, company.numOfWorkingDays, numOfMonths, company.companyName);
+		write(wages, id, company.numOfWorkingDays, company.numOfMonths, company.companyName);
 	}
 }
 
@@ -155,14 +160,14 @@ int main()
 	string searchName;
 	struct EmployeeWageBuilder employeeWageBuilder;
 
-	company.setCompanyDetails("DMART", 4, 100, 20);
-	computeEmpWage(company, 3, 3);
-	company.setCompanyDetails("Reliance", 5, 80, 40);
-	computeEmpWage(company, 2, 3);
+	company.setCompanyDetails("DMART", 4, 100, 20, 3, 3);
+	computeEmpWage(company);
+	company.setCompanyDetails("Reliance", 5, 80, 40, 2, 3);
+	computeEmpWage(company);
 
 	cout<<"Enter the company name you want to search" <<endl;
 	cin >> searchName;
-	employeeWageBuilder.queryTotalWage(company, searchName, 4, 2);
+	employeeWageBuilder.queryTotalWage(company, searchName);
 
 	return 0;
 }
