@@ -111,6 +111,11 @@ void computeEmpWage(struct Company company)
    int a = 0;
    int array[n];
 
+ int nDay = company.numOfMonths * company.numOfEmployees * company.numOfWorkingDays;
+   int b = 0;
+   int arrayDay[nDay];
+
+
 	for(int id = 1; id <= company.numOfEmployees; id++)
 	{
 		for(int month = 1; month <= company.numOfMonths; month++)
@@ -119,6 +124,8 @@ void computeEmpWage(struct Company company)
 			{
 				int dailyEmpWage = employeeWageBuilder.computeEmpWage(company);
 				wages.push_back(dailyEmpWage);
+				arrayDay[b] = dailyEmpWage;
+				b++;
 
 				totalMonthlyWage += dailyEmpWage;
 				sleep(2);
@@ -136,10 +143,22 @@ void computeEmpWage(struct Company company)
 	}
 	cout << endl;
 	cout << "All the monthly wages data for " << company.companyName << "are : " << endl;
+
 	display(array, n);
 	bubbleSort(array, n);
+
    cout << "Array after sorting " << endl;
    display(array, n);
+
+	cout << endl;
+	cout << endl;
+
+	cout << "All the daily wage data for " << company.companyName << " are : " << endl;
+	display(arrayDay, n);
+
+	bubbleSort(arrayDay, n);
+	cout << "daily wages data after sorting " << endl;
+	display(arrayDay, n);
 }
 
 void bubbleSort(int *array, int n) {
@@ -160,47 +179,6 @@ void display(int *array, int n) {
       cout << array[i] << " ";
    cout << endl;
 }
-
-/*
-void sortByMonthlyWages(struct Company company, string searchCompany)
-{
-	int n = company.numOfMonths * company.numOfEmployees;
-	int a = 0;
-	int array[n];
-	int totalMonthlyWage = 0;
-	struct EmployeeWageBuilder employeeWageBuilder;
-	//vector <int> wages;
-
-int result = searchCompany.compare(company.companyName);
-
-if (result == 0) {
-	for (int id = 1; id <= company.numOfEmployees; id++)
-	{
-		for (int month = 1; month <= company.numOfMonths; month++)
-		{
-			for (int day = 1; day <= company.numOfWorkingDays; day++)
-			{
-				int dailyEmpWage = employeeWageBuilder.computeEmpWage(company);
-				 //wages.push_back(dailyEmpWage);
-
-				totalMonthlyWage += dailyEmpWage;
-				sleep(2);
-			}
-			cout << totalMonthlyWage << "\n";
-			array[a] = totalMonthlyWage;
-			a++;
-			totalMonthlyWage = 0;
-		}
-	}
-	cout << endl;
-	bubbleSort(array, n);
-	cout << "Array after sorting " << endl;
-	display(array, n);
-	}
-else {
-	cout << "No such company found" << endl;
-	}
-}*/
 
 void write(vector <int> wages, int employeeID, int numOfWorkingDays, int numOfMonths, string companyName)
 {
@@ -256,12 +234,6 @@ int main()
 				cin >> searchName;
 				employeeWageBuilder.queryTotalWage(company, searchName);
 				break;
-			/*case 3:
-				cout << "Sorting by Monthly Wages" << endl;
-				cout << "Enter company name : ";
-				cin >> searchName;
-				sortByMonthlyWages(company, searchName);
-				break;*/
 			default :
 				cout << "Enter correct option" << endl;
 				break;
